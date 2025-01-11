@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcrypt');
 const userModel = require('../models/user.model')
 // express validator
 const { body, validationResult } = require('express-validator')
@@ -29,12 +30,13 @@ router.post(
 
     // user createing with help of usershcema
 
-    const { email, password, username } = req.body
+      const { email, password, username } = req.body
+      const hashPassword = await bcrypt.hash(password, 10);
 
     const newUser =await userModel.create({
       email,
-      password,
-      username
+      username,
+      password:hashPassword
     })
 
     res.json(newUser)
