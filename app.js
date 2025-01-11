@@ -1,15 +1,22 @@
-// create a express server
 const express = require('express');
 const app = express();
-const userRouter=require("./routes/user.routes")
-app.set("view engine", "ejs");
+const userRouter = require('./routes/user.routes');
 
-app.get('/', (req, res) => {
-    // res.send('Hello World!');
-    res.render('index');
-});
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
 
-app.use("/user", userRouter);
+// Middleware to parse form data
+app.use(express.urlencoded({ extended: true }));
 
+  
+
+// Use the user router
+app.use('/user', userRouter);
+
+  
+
+// Start the server
 const port = 3000;
-app.listen(port);
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+});
