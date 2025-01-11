@@ -1,7 +1,7 @@
 const express = require('express');
 const userRouter = require('./routes/user.routes');
 
-// database coneection
+// database coneection url use anywhere default
 
 const dotenv = require('dotenv');
 dotenv.config();
