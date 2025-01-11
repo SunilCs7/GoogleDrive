@@ -1,6 +1,17 @@
 const express = require('express');
-const app = express();
 const userRouter = require('./routes/user.routes');
+
+// database coneection
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+
+// connection
+const connectToDB = require('./config/db')
+connectToDB();
+
+const app = express();
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
