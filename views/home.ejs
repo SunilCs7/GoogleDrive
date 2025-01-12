@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <title>File Upload</title>
+</head>
+
+<body
+    class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 min-h-screen flex items-center justify-center">
+    <main class="w-full max-w-md p-4">
+        <!-- Upload Button -->
+        <button id="uploadBtn"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 px-5 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition">
+            Upload File
+        </button>
+
+        <!-- File Upload Area -->
+        <div id="uploadArea" class="hidden mt-6 p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4 text-center">Upload Your File</h2>
+            <form id="uploadForm" action="/upload-file" method="post" enctype="multipart/form-data">
+                <div class="flex items-center justify-center w-full">
+                    <label for="dropzone-file"
+                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 hover:bg-gray-100 dark:hover:bg-gray-600 border-gray-300 dark:border-gray-600 transition">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg class="w-12 h-12 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                                    to upload</span> or drag and drop</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (Max 800x400px)</p>
+                        </div>
+                        <input id="dropzone-file" name="file" type="file" class="hidden" />
+                    </label>
+                </div>
+                <button type="submit"
+                    class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium shadow transition">
+                    Upload File
+                </button>
+            </form>
+            <button id="cancelBtn"
+                class="mt-4 w-full bg-gray-300 hover:bg-gray-400 text-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 py-2.5 rounded-lg font-medium shadow transition">
+                Cancel
+            </button>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script>
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadArea = document.getElementById('uploadArea');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const dropzoneFile = document.getElementById('dropzone-file');
+
+        // Show the upload area
+        uploadBtn.addEventListener('click', () => {
+            uploadArea.classList.remove('hidden');
+            uploadBtn.classList.add('hidden');
+        });
+
+        // Hide the upload area
+        cancelBtn.addEventListener('click', () => {
+            uploadArea.classList.add('hidden');
+            uploadBtn.classList.remove('hidden');
+        });
+
+        // Drag and drop file handling
+        const uploadForm = document.getElementById('uploadForm');
+        const dropzone = uploadForm.querySelector('label');
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('bg-gray-200');
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('bg-gray-200');
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('bg-gray-200');
+            if (e.dataTransfer.files.length) {
+                dropzoneFile.files = e.dataTransfer.files;
+            }
+        });
+    </script>
+</body>
+
+</html>

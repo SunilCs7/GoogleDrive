@@ -1,5 +1,7 @@
 const express = require('express');
 const userRouter = require('./routes/user.routes');
+// home requires
+const indexRouter = require('./routes/index.routes');
 
 // database coneection url use anywhere default
 
@@ -21,7 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 
   
 
-// Use the user router
+// Use the user, home router
+app.use('/', indexRouter);
 app.use('/user', userRouter);
 
   
